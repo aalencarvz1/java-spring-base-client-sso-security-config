@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.oiis.libs.java.spring.commons</groupId>
     <artifactId>base-security-client-sso-config</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.6</version>
     <packaging>jar</packaging>
 
     <distributionManagement>
@@ -41,11 +41,15 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         <dependency>
             <groupId>com.oiis.libs.java.spring.commons</groupId>
-            <artifactId>sso-authentication-filter-check</artifactId>
+            <artifactId>default_data_swap</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
