@@ -11,7 +11,7 @@
     </parent>
     <groupId>com.oiis.libs.java.spring.commons</groupId>
     <artifactId>base-security-client-sso-config</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.8</version>
     <packaging>jar</packaging>
 
     <distributionManagement>
