@@ -74,7 +74,15 @@ public class BaseSsoAuthenticationFilterCheck extends OncePerRequestFilter {
         DefaultDataSwap bodyResponse = new DefaultDataSwap();
         try {
             String path = request.getRequestURI();
-            logger.debug("endpoint: {}",path);
+            logger.info("requested endpoint: {}",path);
+
+            String ip = request.getRemoteAddr();
+            String host = request.getRemoteHost();
+            String userAgent = request.getHeader("User-Agent");
+            String forwardedFor = request.getHeader("X-Forwarded-For"); // se estiver atrás de proxy/reverso
+            int port = request.getRemotePort();
+
+            logger.debug("resteted from ip {}, host {}, userAget {}, forwarderFor {}, port {}",ip, host, userAgent, forwardedFor, port);
 
             if (publicEndpoints.contains(path)) {
                 logger.debug("endpoint is public");
@@ -111,15 +119,20 @@ public class BaseSsoAuthenticationFilterCheck extends OncePerRequestFilter {
                     if (bodyResponse != null) {
                         dataNode = (Map<String, Object>) bodyResponse.data;
                     }
-                    logger.debug("status code {}",statusCode);
+                    logger.debug("sso check token response status code {}",statusCode.value());
                     if (statusCode.is2xxSuccessful()) {
-                        if (dataNode != null && dataNode.containsKey("token") && dataNode.containsKey("user_id")) {
+                        if (dataNode != null && dataNode.containsKey("token") && dataNode.containsKey("user")) {
+                            logger.debug("dataNode contains token and user");
                             String ssoToken = String.valueOf(dataNode.get("token"));
-                            String userId = String.valueOf(dataNode.get("user_id"));
-                            if (StringUtils.hasText(ssoToken) && StringUtils.hasText(userId)) {
+                            logger.debug("ssoToken {}",ssoToken);
+                            Map<String, Object> user = (Map<String, Object>) dataNode.get("user");
+                            logger.debug("user {}",user);
+                            if (StringUtils.hasText(ssoToken) && StringUtils.hasText(String.valueOf(user.get("id")))) {
+                                logger.debug("has ssoToken and has user.id");
                                 UsernamePasswordAuthenticationToken authentication =
                                         new UsernamePasswordAuthenticationToken(dataNode, null, List.of());
                                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                                logger.debug("user parsed");
                             } else {
                                 writeBodyResponse(bodyResponse,"missing body data token on sso response",response);
                                 return;
@@ -139,6 +152,7 @@ public class BaseSsoAuthenticationFilterCheck extends OncePerRequestFilter {
                 return;
             }
 
+            logger.debug("doing filterChain.doFiliter");
             filterChain.doFilter(request, response);
         } catch (Exception e) {
             e.printStackTrace();
