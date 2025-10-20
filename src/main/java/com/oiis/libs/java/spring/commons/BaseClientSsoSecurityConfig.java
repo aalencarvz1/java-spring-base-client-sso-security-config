@@ -4,6 +4,7 @@ package com.oiis.libs.java.spring.commons;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.DeprecatedConfigurationProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -23,9 +24,11 @@ import java.util.List;
  *
  * @author aalvencarvz1
  * @version 1.0.0
+ * @deprecated 2025-10-20 use new class com.oiis.libs.security.sso.base_server_sso_client_security_config.BaseServerSSOClientSecurityConfig
  */
 @Configuration
 @EnableWebSecurity
+@Deprecated(since = "2025-10-20")
 public class BaseClientSsoSecurityConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseClientSsoSecurityConfig.class);

@@ -2,6 +2,8 @@
 
 This library provides a Spring Security configuration for integrating Single Sign-On (SSO) authentication into your Spring Boot application. It includes a base security configuration and a filter to validate JWT tokens against an SSO server, ensuring secure access to protected endpoints.
 
+DEPRECATED - 2025-10-20 - This class is deprecated, use com.oiis.libs.security.sso.base_server_sso_client_security_config.BaseServerSSOClientSecurityConfig in replacement this.
+
 ## Features
 - Configures Spring Security with a custom SSO authentication filter.
 - Supports public endpoints that bypass authentication.
