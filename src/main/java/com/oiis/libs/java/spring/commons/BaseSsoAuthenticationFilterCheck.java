@@ -1,7 +1,6 @@
 package com.oiis.libs.java.spring.commons;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oiis.libs.java.spring.commons.helpers.DefaultDataSwap;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,6 +22,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Class that implement minimal security client api check.
+ *
+ * @author aalencarvz1
+ * @version 1.0.0
+ */
 @Component
 public class BaseSsoAuthenticationFilterCheck extends OncePerRequestFilter {
 
@@ -43,10 +48,22 @@ public class BaseSsoAuthenticationFilterCheck extends OncePerRequestFilter {
     private ObjectMapper objectMapper;
 
 
+    /**
+     * constructor with parameters
+     *
+     * @param baseSsoEndpoint the endpoint of sso
+     */
     public BaseSsoAuthenticationFilterCheck(String baseSsoEndpoint) {
         this.webClient = WebClient.create(baseSsoEndpoint);
     }
 
+    /**
+     * helper to write body response
+     *
+     * @param bodyResponse the current body response
+     * @param message the message if necessary
+     * @param response the http servlet response
+     */
     private void writeBodyResponse(DefaultDataSwap bodyResponse, String message, HttpServletResponse response) {
         try {
             bodyResponse.message = message;
@@ -64,10 +81,10 @@ public class BaseSsoAuthenticationFilterCheck extends OncePerRequestFilter {
 
     /**
      * Protect end points of not authorized access (midleware) and call sso ot check token
-     * @param request
-     * @param response
-     * @param filterChain
-     * @throws IOException
+     *
+     * @param request the http servlet request
+     * @param response the http servlet response
+     * @param filterChain the filter chain
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {

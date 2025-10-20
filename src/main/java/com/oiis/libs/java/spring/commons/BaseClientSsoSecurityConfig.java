@@ -17,12 +17,25 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
+
+/**
+ * Class that represents base sso client configuration.
+ *
+ * @author aalvencarvz1
+ * @version 1.0.0
+ */
 @Configuration
 @EnableWebSecurity
 public class BaseClientSsoSecurityConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseClientSsoSecurityConfig.class);
 
+    /**
+     * default filter check
+     *
+     * @param baseSsoEndpoint the endpoint of sso
+     * @return instance of this base filter check
+     */
     @Bean
     public BaseSsoAuthenticationFilterCheck baseSsoAuthenticationFilterCheck(@Value("${sso.base-endpoint}") String baseSsoEndpoint) {
         return new BaseSsoAuthenticationFilterCheck(baseSsoEndpoint);
@@ -31,6 +44,11 @@ public class BaseClientSsoSecurityConfig {
     @Value("${app.security.public-endpoints}")
     private List<String> publicEndpoints;
 
+    /**
+     * Configure cors
+     *
+     * @return the cors configuration
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -45,6 +63,14 @@ public class BaseClientSsoSecurityConfig {
         return source;
     }
 
+    /**
+     * filter chain
+     *
+     * @param http the http security request
+     * @param baseSsoAuthenticationFilterCheck the base client filter check
+     * @return the security filter chain
+     * @throws Exception throw exception if error on http build
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, BaseSsoAuthenticationFilterCheck baseSsoAuthenticationFilterCheck) throws Exception {
         logger.debug("public endpoints: {} {}", Arrays.toString(publicEndpoints.toArray(new String[0])),publicEndpoints);

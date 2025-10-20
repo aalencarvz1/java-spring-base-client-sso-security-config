@@ -9,21 +9,14 @@
         <version>3.5.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <!--<groupId>com.oiis.libs.java.spring.commons</groupId>
+    <name>Base SSO Client Security Config</name>
+    <groupId>io.github.aalencarvz1.libs.security.sso.client</groupId>
     <artifactId>base-security-client-sso-config</artifactId>
-    <version>1.1.2</version>-->
-    <groupId>io.github.aalencarvz1</groupId>
-    <artifactId>base-security-client-sso-config</artifactId>
-    <version>1.1.3</version>
+    <version>1.1.5</version>
 
     <packaging>jar</packaging>
 
     <distributionManagement>
-        <!--<repository>
-            <id>github</id>
-            <name>GitHub aalencarvz1 Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/aalencarvz1/java-spring-base-client-sso-security-config</url>
-        </repository>-->
         <repository>
             <id>central</id>
             <name>Central Repository</name>
@@ -61,61 +54,55 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.github.aalencarvz1.libs.commons</groupId>
+            <artifactId>default-data-swap</artifactId>
+            <version>1.1.5</version>
+        </dependency>
     </dependencies>
-    <!--<profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>3.3.0</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>3.6.3</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>-->
 
-    <!--<build>
+    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.12.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.2.3</version>
+                <version>3.2.8</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
                         <phase>verify</phase>
-                        <goals><goal>sign</goal></goals>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
-    </build>-->
-    <build>
-        <plugins>
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
@@ -124,6 +111,8 @@
                 <configuration>
                     <publishingServerId>central</publishingServerId>
                     <autoPublish>true</autoPublish>
+                    <checksums>required</checksums>
+
                 </configuration>
             </plugin>
         </plugins>
